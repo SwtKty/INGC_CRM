@@ -5,4 +5,4 @@ from django.http import HttpResponse
 # Create your views here.
 
 def homeClient(request):
-    return HttpResponse('clients')
+    return render(request,'clients/clients.html')

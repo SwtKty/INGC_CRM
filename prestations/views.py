@@ -5,7 +5,7 @@ from django.http import HttpResponse
 # Create your views here.
 
 def home(request):
-    return HttpResponse('home')
+    return render(request,'acceuil.html')
 
 def prestation(request):
-    return HttpResponse('prestations')
+    return render(request,'prestations/prestations.html')
