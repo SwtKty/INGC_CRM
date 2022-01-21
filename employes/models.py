@@ -8,3 +8,6 @@ class Employe(models.Model):
     nomEmploye = models.CharField(max_length=200, null=True)
     emailEmploye = models.CharField(max_length=200, null=True)
     telEmploye = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return str(self.prenomEmploye)

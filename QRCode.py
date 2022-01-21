@@ -9,5 +9,5 @@ if __name__=="__main__":
 
     """Lecture d'un QRCode"""
     d = cv2.QRCodeDetector()
-    val, points, qrcode = d.detectAndDecode(cv2.imread("qrcodeINZOSERVICES.png"))
+    val, points, qrcode = d.detectAndDecode(cv2.imread("mister.png"))
     print(val)
