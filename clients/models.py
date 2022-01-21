@@ -18,12 +18,14 @@ class Client(models.Model):
     villeClient = models.CharField(max_length=200, null=True)
     cpClient = models.CharField(max_length=8, null=True)
     qr_code = models.ImageField(upload_to='qr_codes', blank=True)
+    codeClient = models.CharField(max_length=50, null=True)
 
     def __str__(self):
         return str(self.prenomClient)
 
     def save(self, *args, **kwargs):
-        qrcode_img = qrcode.make(self.nomClient + self.cpClient)
+        self.codeClient = self.nomClient + self.prenomClient + self.cpClient
+        qrcode_img = qrcode.make(self.codeClient)
         canvas = Image.new('RGB', (290, 290), 'white')
         draw = ImageDraw.Draw(canvas)
         canvas.paste(qrcode_img)
@@ -33,3 +35,5 @@ class Client(models.Model):
         self.qr_code.save(fname, File(buffer), save=False)
         canvas.close()
         super().save(*args, **kwargs)
+
+

@@ -23,6 +23,7 @@
         <th>Ville</th>
         <th>CP</th>
         <th>Complément d'adresse</th>
+        <th>CodeClient</th>
         <th>Qr_Code</th>
     </tr>
 
@@ -39,9 +40,10 @@
         <th>{{ client.villeClient }}</th>
         <th>{{ client.cpClient}}</th>
         <th>{{ client.appartementClient }}</th>
+        <th>{{ client.codeClient }}</th>
         <th><img class="fit-picture"
      src={{ client.qr_code.url }}
-     alt="QR_CODE de M / MME{{ client.nomClient }} {{ client.prenomClient }}"></th>
+     alt="QR_CODE de M / MME {{ client.nomClient }} {{ client.prenomClient }}"></th>
     </tr>
 
     {% endfor %}
