@@ -10,4 +10,6 @@ class Employe(models.Model):
     telEmploye = models.CharField(max_length=200, null=True)
 
     def __str__(self):
-        return str(self.prenomEmploye)
+       mot = str(self.prenomEmploye + "\n")
+       mot = mot + str(self.nomEmploye)
+       return mot

@@ -21,7 +21,9 @@ class Client(models.Model):
     codeClient = models.CharField(max_length=50, null=True)
 
     def __str__(self):
-        return str(self.prenomClient)
+        mot = str(self.prenomClient + "\n")
+        mot = mot + str(self.nomClient)
+        return mot
 
     def save(self, *args, **kwargs):
         self.codeClient = self.nomClient + self.prenomClient + self.cpClient

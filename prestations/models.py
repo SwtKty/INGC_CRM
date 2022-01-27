@@ -11,3 +11,5 @@ class Prestation(models.Model):
     employe =models.ForeignKey(Employe,null=True, on_delete=models.SET_NULL)
     client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL)
 
+    def __str__(self):
+        return str(self.nomPrestation)
