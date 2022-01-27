@@ -4,7 +4,7 @@ from django.http import HttpResponse
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import prestationSerializer
+from .serializers import prestationSerializer1, prestationSerializer2, prestationSerializer3, prestationSerializer4
 
 from clients.models import Client
 from employes.models import Employe
@@ -40,20 +40,20 @@ def prestationOverview(request):
 @api_view(['GET'])
 def prestationList(request):
     prestations = Prestation.objects.all()
-    serializer = prestationSerializer(prestations, many=True)
+    serializer = prestationSerializer1(prestations, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
 def prestationDetail(request, pk):
     prestations = Prestation.objects.get(id=pk)
-    serializer = prestationSerializer(prestations, many=False)
+    serializer = prestationSerializer1(prestations, many=False)
     return Response(serializer.data)
 
 
 @api_view(['POST'])
 def addPrestation(request):
-    serializer = prestationSerializer(data=request.data)
+    serializer = prestationSerializer2(data=request.data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
@@ -61,7 +61,7 @@ def addPrestation(request):
 @api_view(['POST'])
 def UpdatePrestation(request, pk):
     prestations = Prestation.objects.get(id=pk)
-    serializer = prestationSerializer(instance=prestations,data=request.data)
+    serializer = prestationSerializer3(instance=prestations,data=request.data)
 
     if serializer.is_valid():
         serializer.save()
