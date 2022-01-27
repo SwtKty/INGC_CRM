@@ -4,7 +4,7 @@ from employes.models import Employe
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import employesSerializer
+from .serializers import employeSerializer
 
 # Create your views here.
 
