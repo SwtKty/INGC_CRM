@@ -36,17 +36,20 @@ def prestationOverview(request):
     }
     return Response(api_url)
 
+
 @api_view(['GET'])
 def prestationList(request):
     prestations = Prestation.objects.all()
     serializer = prestationSerializer(prestations, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 def prestationDetail(request, pk):
     prestations = Prestation.objects.get(id=pk)
     serializer = prestationSerializer(prestations, many=False)
     return Response(serializer.data)
+
 
 @api_view(['POST'])
 def addPrestation(request):
