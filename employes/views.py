@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from employes.models import Employe
 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import employeSerializer2, employeSerializer1
