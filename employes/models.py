@@ -8,6 +8,7 @@ class Employe(models.Model):
     nomEmploye = models.CharField(max_length=200, null=True)
     emailEmploye = models.CharField(max_length=200, null=True)
     telEmploye = models.CharField(max_length=200, null=True)
+    mdpEmploye = models.CharField(max_length=50, null=True)
 
     def __str__(self):
        mot = str(self.prenomEmploye + "\n")

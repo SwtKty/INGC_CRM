@@ -2,12 +2,18 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from employes.models import Employe
 
+from django.contrib.auth.models import User
+
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from .serializers import employeSerializer2, employeSerializer1
+
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 # Create your views here.
@@ -16,6 +22,7 @@ def homeEmploye(request):
     employe = Employe.objects.all()
     context = {'employes': employe}
     return render(request, 'employes/employes.html', context)
+
 
 
 @api_view(['GET'])

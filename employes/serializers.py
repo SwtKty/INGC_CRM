@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Employe
 
 
+
 class employeSerializer2(serializers.ModelSerializer):
     class Meta:
         model = Employe
