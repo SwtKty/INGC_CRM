@@ -1,6 +1,12 @@
 from rest_framework import serializers
 from .models import Employe
+from django.contrib.auth.models import User
 
+
+class EmployeRegisterSerializer (serializers.ModelSerializer):
+    class Meta:
+        model = Employe
+        fields = ['prenomEmploye', 'mdpEmploye']
 
 
 class employeSerializer2(serializers.ModelSerializer):
