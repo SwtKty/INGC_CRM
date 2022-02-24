@@ -3,11 +3,13 @@ from .models import Employe
 from django.contrib.auth.models import User
 
 
-class EmployeRegisterSerializer (serializers.ModelSerializer):
+class EmployeLoginSerializer (serializers.ModelSerializer):
 
     class Meta:
         model = Employe
-        fields = ['prenomEmploye', 'emailEmploye','mdpEmploye']
+        fields = ['emailEmploye','mdpEmploye','token']
+
+        read_only_fields = ['token']
 
 
 class employeSerializer2(serializers.ModelSerializer):

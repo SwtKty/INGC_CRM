@@ -14,7 +14,6 @@
 
     <tr>
         <th>ID</th>
-        <th>Pseudo</th>
         <th>Nom</th>
         <th>Prénom</th>
         <th>Telephone</th>
@@ -24,9 +23,8 @@
      {% for employe in employes %}
     <tr>
         <th>{{ employe.id }}</th>
-        <th>{{ employe.pseudoEmploye }}</th>
-        <th>{{ employe.prenomEmploye }}</th>
         <th>{{ employe.nomEmploye }}</th>
+        <th>{{ employe.prenomEmploye }}</th>
         <th>{{ employe.telEmploye }}</th>
         <th>{{ employe.emailEmploye }}</th>
     </tr>

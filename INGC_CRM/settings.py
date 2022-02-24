@@ -181,3 +181,4 @@ MEDIA_ROOT = os.path.join(os.path.dirname(
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
+

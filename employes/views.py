@@ -1,24 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth import authenticate
 from employes.models import Employe
-
-from django.contrib.auth.models import User
-
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
 
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
-from .serializers import employeSerializer2, employeSerializer1, EmployeRegisterSerializer
-
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.exceptions import AuthenticationFailed
-
 from rest_framework.generics import GenericAPIView
-from employes.serializers import EmployeRegisterSerializer
 from rest_framework import status
+from .serializers import employeSerializer2, employeSerializer1, EmployeLoginSerializer
 
 
 # Create your views here.
@@ -31,15 +21,20 @@ def homeEmploye(request):
 
 
 class LoginEmploye(GenericAPIView):
-    serializer_class = EmployeRegisterSerializer
+    serializer_class = EmployeLoginSerializer
 
     def post(self, request):
-        serializer = self.serializer_class(data=request.data)
+        email = request.data.get('emailEmploye', None)
+        mdp = request.data.get('mdpEmploye', None)
 
-        if serializer.is_valid():
-            return Response(serializer.data)
+        user = authenticate(username=email, password=mdp)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if user:
+            serializer=self.serializer_class(user)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response({'message':"Invalid credentials, try again"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 @api_view(['GET'])
