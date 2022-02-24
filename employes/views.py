@@ -16,8 +16,13 @@ from .serializers import employeSerializer2, employeSerializer1, EmployeRegister
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.exceptions import AuthenticationFailed
 
+from rest_framework.generics import GenericAPIView
+from employes.serializers import EmployeRegisterSerializer
+from rest_framework import status
+
 
 # Create your views here.
+
 
 def homeEmploye(request):
     employe = Employe.objects.all()
@@ -25,20 +30,16 @@ def homeEmploye(request):
     return render(request, 'employes/employes.html', context)
 
 
-class LoginEmploye(APIView):
+class LoginEmploye(GenericAPIView):
+    serializer_class = EmployeRegisterSerializer
+
     def post(self, request):
-        email = request.data['emailEmploye']
-        mdp = request.data['mdpEmploye']
+        serializer = self.serializer_class(data=request.data)
 
-        employe = Employe.objects.filter(emailEmploye=email).first()
+        if serializer.is_valid():
+            return Response(serializer.data)
 
-        if employe is None:
-            raise AuthenticationFailed('User not found')
-
-        if not employe.check_password(mdp):
-            raise AuthenticationFailed('Incorrect password')
-
-        return Response(employe)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
@@ -79,4 +80,3 @@ def DeleteEmploye(request, pk):
     employes = Employe.objects.get(id=pk)
     employes.delete()
     return Response("Employe succesfully delete!")
-

@@ -13,6 +13,6 @@ urlpatterns = [
     path('updateEmploye/<str:pk>/', views.UpdateEmploye),
     path('deleteEmploye/<str:pk>/', views.DeleteEmploye),
 
-    path('login/', LoginEmploye.as_view()),
+    path('login/', LoginEmploye.as_view(), name="register"),
 
 ]

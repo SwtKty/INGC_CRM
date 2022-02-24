@@ -4,9 +4,10 @@ from django.contrib.auth.models import User
 
 
 class EmployeRegisterSerializer (serializers.ModelSerializer):
+
     class Meta:
         model = Employe
-        fields = ['prenomEmploye', 'mdpEmploye']
+        fields = ['prenomEmploye', 'emailEmploye','mdpEmploye']
 
 
 class employeSerializer2(serializers.ModelSerializer):
