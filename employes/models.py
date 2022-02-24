@@ -12,3 +12,5 @@ class Employe(models.Model):
 
     def __str__(self):
         return self.prenomEmploye
+
+
