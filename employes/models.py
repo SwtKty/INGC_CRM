@@ -17,11 +17,3 @@ class Employe(models.Model):
     def __str__(self):
         return self.prenomEmploye
 
-    @property
-    def token(self):
-        token = jwt.encode(
-            {'prenomEmploye': self.prenomEmploye, 'emailEmploye': self.emailEmploye,
-             'exp': datetime.utcnow() + timedelta(minutes=6)},
-            settings.SECRET_KEY, algorithm='HS256')
-
-        return token
