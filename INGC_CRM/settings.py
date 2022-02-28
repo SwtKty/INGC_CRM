@@ -52,9 +52,7 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        'authentification.backends.JWTAuthentication'
     ]
 }
 
@@ -165,6 +163,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
 
 #JWT
 JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
