@@ -12,12 +12,13 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'first-name', 'last_name', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password']
 
     def validate(self, attrs):
-        if User.objects.filter(email=attrs['email']).exists():
-            raise serializers.ValidationError({'email', 'Email is already in use'})
+        email = attrs.get('email', '')
+        if User.objects.filter(email=email).exists():
+            raise serializers.ValidationError({'email' :'Email is already in use'})
         return super().validate(attrs)
 
     def create(self, validated_data):
-        return User.objects.create_user(validated_data)
+        return User.objects.create_user(**validated_data)
