@@ -142,6 +142,8 @@ JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
 
 STATIC_URL = 'static/'
 
+AUTH_USER_MODEL = 'users.NewUser'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(
     BASE_DIR), "media_root")
