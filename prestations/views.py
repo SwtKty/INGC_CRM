@@ -1,14 +1,18 @@
 from django.shortcuts import render
+from django.http import Http404
 from django.http import JsonResponse
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from prestations.serializers import PrestationSerializer
+
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import prestationSerializer3, prestationSerializer1, prestationSerializer2
+from rest_framework.views import APIView
+from rest_framework import mixins
+from rest_framework import generics
+from .serializers import prestationSerializer3, prestationSerializer1, PrestationSerializer
 
 from clients.models import Client
 from employes.models import Employe
@@ -64,10 +68,11 @@ def addPrestation(request):
         serializer.save()
     return Response(serializer.data)
 
+
 @api_view(['POST'])
 def UpdatePrestation(request, pk):
     prestations = Prestation.objects.get(id=pk)
-    serializer = prestationSerializer2(instance=prestations,data=request.data)
+    serializer = PrestationSerializer(instance=prestations,data=request.data)
 
     if serializer.is_valid():
         serializer.save()
@@ -82,40 +87,12 @@ def DeletePrestation(request, pk):
     return Response("Prestation succesfully delete!")
 
 
-@api_view(['GET', 'PUT', ])
-def prestations_list(request):
-    if request.method == 'GET':
-        prestations = Prestation.objects.all()
-        serializer = PrestationSerializer(prestations, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
-    elif request.method == 'POST':
-        serializer = PrestationSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class PrestationList(generics.ListCreateAPIView):
+    queryset = Prestation.objects.all()
+    serializer_class = PrestationSerializer
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def prestations_detail(request, pk):
-    try:
-        prestations = Prestation.objects.get(pk=pk)
-    except Prestation.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        serializer = PrestationSerializer(prestations)
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        serializer = PrestationSerializer(prestations, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'DELETE':
-        prestations.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class PrestationDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Prestation.objects.all()
+    serializer_class = PrestationSerializer
 

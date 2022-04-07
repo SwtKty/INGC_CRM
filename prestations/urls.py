@@ -15,7 +15,7 @@ urlpatterns = [
     path('updatePrestation/<str:pk>/', views.UpdatePrestation),
     path('deletePrestation/<str:pk>/', views.DeletePrestation),
 
-    path('prestation/', views.prestations_list),
-    path('prestation/<int:pk>', views.prestations_detail)
+    path('prestation/', views.PrestationList.as_view()),
+    path('prestation/<int:pk>', views.PrestationDetail.as_view())
 
 ]

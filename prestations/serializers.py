@@ -23,27 +23,6 @@ class prestationSerializer3(serializers.ModelSerializer):
         fields = ['nomPrestation', 'employe', 'client']
 
 
-class prestationEmployeSerializer (serializers):
-    class Meta:
-        model = Employe
-        fields = ['prenomEploye']
-
-
-class prestationClientSerializer (serializers):
-    class Meta:
-        model = Client
-        fields = ['prenomClient']
-
-
-class prestationSerializer2(serializers.ModelSerializer):
-    employe = prestationEmployeSerializer(many=True)
-    client = prestationClientSerializer(many=True)
-
-    class Meta:
-        model = Prestation
-        fields = ['employe', 'client']
-
-
 class prestationSerializer4(serializers.ModelSerializer):
     employe = employeSerializer3(many=False, read_only=True)
     client = clientSerializer3(many=False, read_only=True)
