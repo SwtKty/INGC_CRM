@@ -12,11 +12,14 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework import mixins
 from rest_framework import generics
-from .serializers import prestationSerializer3, prestationSerializer1, PrestationSerializer
+from rest_framework import permissions
+from .serializers import prestationSerializer3, prestationSerializer1, PrestationSerializer, UserSerializer
 
-from clients.models import Client
-from employes.models import Employe
-from prestations.models import Prestation
+from .models import Client, Employe, Prestation, NewUser
+from django.conf import settings
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 # Create your views here.
@@ -86,13 +89,30 @@ def DeletePrestation(request, pk):
     prestations.delete()
     return Response("Prestation succesfully delete!")
 
+# nouvelle version commence à partir de là
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
 
 class PrestationList(generics.ListCreateAPIView):
     queryset = Prestation.objects.all()
     serializer_class = PrestationSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(create_by=self.request.user)
 
 
 class PrestationDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Prestation.objects.all()
     serializer_class = PrestationSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 

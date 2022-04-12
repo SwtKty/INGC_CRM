@@ -16,6 +16,8 @@ urlpatterns = [
     path('deletePrestation/<str:pk>/', views.DeletePrestation),
 
     path('prestation/', views.PrestationList.as_view()),
-    path('prestation/<int:pk>', views.PrestationDetail.as_view())
+    path('prestation/<int:pk>', views.PrestationDetail.as_view()),
+    path('users/', views.UserList.as_view()),
+    path('users/<int:pk>/', views.UserDetail.as_view())
 
 ]

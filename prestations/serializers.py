@@ -3,8 +3,11 @@ from rest_framework import serializers
 from clients.serializer import clientSerializer1, clientSerializer3
 from employes.serializers import employeSerializer1, employeSerializer3
 from .models import Prestation
-from .models import Client
-from .models import Employe
+from .models import Client, Employe, NewUser
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class prestationSerializer1(serializers.ModelSerializer):
@@ -30,16 +33,27 @@ class prestationSerializer4(serializers.ModelSerializer):
         model = Prestation
         fields = ['employe', 'client']
 
+# nouvelle version commence ici
+
+
+class UserSerializer(serializers.ModelSerializer):
+    prestations = serializers.PrimaryKeyRelatedField(many=True, queryset=Prestation.objects.all())
+    create_by = serializers.ReadOnlyField(source='create_by.username')
+
+    class Meta:
+        model = User
+        fields = ['id', 'user_name', 'prestations', 'create_by']
+
 
 class PrestationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Prestation
-        fields = ['id', 'nomPrestation', 'heureArrivee', 'heureDepart', 'employe', 'client', 'commentaire']
+        fields = ['id', 'nomPrestation', 'heureArrivee', 'heureDepart', 'ref_employe', 'ref_client', 'commentaire']
 
     id = serializers.IntegerField(read_only=True)
     nomPrestation = serializers.CharField(required=True, allow_blank=False, max_length=100)
-    employe = serializers.CharField(required=True, allow_blank=False, max_length=100)
-    client = serializers.CharField(required=True, allow_blank=False, max_length=100)
+    ref_employe = serializers.CharField(required=True, allow_blank=False, max_length=100)
+    ref_client = serializers.CharField(required=True, allow_blank=False, max_length=100)
     commentaire = serializers.CharField(style={'base_template': 'textarea.html'})
 
     def create(self, validated_data):
@@ -47,8 +61,8 @@ class PrestationSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.nomPrestation = validated_data.get('nomPrestation', instance.nomPrestation)
-        instance.employe = validated_data.get('employe', instance.employe)
-        instance.client = validated_data.get('client', instance.client)
+        instance.ref_employe = validated_data.get('ref_employe', instance.ref_employe)
+        instance.ref_client = validated_data.get('ref_client', instance.ref_client)
         instance.save()
         return instance
 

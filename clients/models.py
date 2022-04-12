@@ -17,8 +17,8 @@ class Client(models.Model):
     complementAdresseClient = models.CharField(max_length=100, null=True)
     villeClient = models.CharField(max_length=200, null=True)
     cpClient = models.CharField(max_length=8, null=True)
-    qr_code = models.ImageField(upload_to='qr_codes', blank=True)
-    codeClient = models.CharField(max_length=50, null=True)
+    qr_code = models.ImageField(upload_to='qr_codes', null=True)
+    codeClient = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         mot = str(self.prenomClient + "\n")

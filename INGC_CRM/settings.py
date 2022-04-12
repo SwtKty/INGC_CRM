@@ -56,7 +56,6 @@ REST_FRAMEWORK = {
 }
 
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
 
@@ -142,7 +141,6 @@ JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
 
 STATIC_URL = 'static/'
 
-AUTH_USER_MODEL = 'users.NewUser'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(
@@ -155,3 +153,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+AUTH_USER_MODEL = 'users.NewUser'
