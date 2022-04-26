@@ -5,15 +5,17 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 
-
+from rest_framework.reverse import reverse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, renderers
 from rest_framework.views import APIView
 from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import permissions
-from .serializers import prestationSerializer3, prestationSerializer1, PrestationSerializer, UserSerializer
+
+from .permissions import IsOwnerOrReadOnly
+from .serializers import prestationSerializer1, PrestationSerializer, UserSerializer
 
 from .models import Client, Employe, Prestation, NewUser
 from django.conf import settings
@@ -92,6 +94,14 @@ def DeletePrestation(request, pk):
 # nouvelle version commence à partir de là
 
 
+@api_view(['GET'])
+def api_root(request, format= None):
+    return Response({
+        'users': reverse('users-list', request=request, format=format),
+        'prestations': reverse('prestations-list', request=request, format=format),
+    })
+
+
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -114,5 +124,7 @@ class PrestationList(generics.ListCreateAPIView):
 class PrestationDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Prestation.objects.all()
     serializer_class = PrestationSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+
 

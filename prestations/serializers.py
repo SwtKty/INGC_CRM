@@ -13,14 +13,16 @@ User = get_user_model()
 class prestationSerializer1(serializers.ModelSerializer):
     employe = employeSerializer3(many=False, read_only=True)
     client = clientSerializer3(many=False, read_only=True)
+
     class Meta:
         model = Prestation
         fields = '__all__'
 
 
-class prestationSerializer3(serializers.ModelSerializer):
+#class prestationSerializer3(serializers.ModelSerializer):
     employe = employeSerializer3(many=False, read_only=True)
     client = clientSerializer3(many=False, read_only=True)
+
     class Meta:
         model = Prestation
         fields = ['nomPrestation', 'employe', 'client']
@@ -29,26 +31,31 @@ class prestationSerializer3(serializers.ModelSerializer):
 class prestationSerializer4(serializers.ModelSerializer):
     employe = employeSerializer3(many=False, read_only=True)
     client = clientSerializer3(many=False, read_only=True)
+
     class Meta:
         model = Prestation
         fields = ['employe', 'client']
 
+
 # nouvelle version commence ici
 
 
-class UserSerializer(serializers.ModelSerializer):
-    prestations = serializers.PrimaryKeyRelatedField(many=True, queryset=Prestation.objects.all())
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    prestations = serializers.HyperlinkedRelatedField(many=True, view_name='prestations-detail', read_only=True)
     create_by = serializers.ReadOnlyField(source='create_by.username')
 
     class Meta:
-        model = User
-        fields = ['id', 'user_name', 'prestations', 'create_by']
+        model = NewUser
+        fields = ['create_by', 'id', 'user_name', 'prestations']
 
 
-class PrestationSerializer(serializers.ModelSerializer):
+class PrestationSerializer(serializers.HyperlinkedModelSerializer):
+    create_by = serializers.ReadOnlyField(source='create_by.username')
+
     class Meta:
         model = Prestation
-        fields = ['id', 'nomPrestation', 'heureArrivee', 'heureDepart', 'ref_employe', 'ref_client', 'commentaire']
+        fields = ['create_by', 'id', 'nomPrestation', 'heureArrivee', 'heureDepart', 'ref_employe', 'ref_client',
+                  'commentaire']
 
     id = serializers.IntegerField(read_only=True)
     nomPrestation = serializers.CharField(required=True, allow_blank=False, max_length=100)
@@ -65,4 +72,3 @@ class PrestationSerializer(serializers.ModelSerializer):
         instance.ref_client = validated_data.get('ref_client', instance.ref_client)
         instance.save()
         return instance
-
