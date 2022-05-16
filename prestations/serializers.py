@@ -59,7 +59,7 @@ class PrestationSerializer(serializers.HyperlinkedModelSerializer):
 
     id = serializers.IntegerField(read_only=True)
     nomPrestation = serializers.CharField(required=True, allow_blank=False, max_length=100)
-    ref_employe = serializers.CharField(source='Employe')
+    ref_employe = serializers.CharField(required=True, allow_blank=False, max_length=100)
     ref_client = serializers.CharField(required=True, allow_blank=False, max_length=100)
     commentaire = serializers.CharField(style={'base_template': 'textarea.html'})
     heureDepart = serializers.TimeField(required=False)
@@ -69,7 +69,7 @@ class PrestationSerializer(serializers.HyperlinkedModelSerializer):
 
     def update(self, instance, validated_data):
         instance.nomPrestation = validated_data.get('nomPrestation', instance.nomPrestation)
-        instance.ref_employe = validated_data.get('ref_employe', instance.ref_employe)
-        instance.ref_client = validated_data.get('ref_client', instance.ref_client)
+        instance.ref_employe = validated_data.get('prenomEmploye', instance.ref_employe)
+        instance.ref_client = validated_data.get('prenomClient', instance.ref_client)
         instance.save()
         return instance
