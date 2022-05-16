@@ -59,9 +59,10 @@ class PrestationSerializer(serializers.HyperlinkedModelSerializer):
 
     id = serializers.IntegerField(read_only=True)
     nomPrestation = serializers.CharField(required=True, allow_blank=False, max_length=100)
-    ref_employe = serializers.CharField(required=True, allow_blank=False, max_length=100)
+    ref_employe = serializers.CharField(source='Employe')
     ref_client = serializers.CharField(required=True, allow_blank=False, max_length=100)
     commentaire = serializers.CharField(style={'base_template': 'textarea.html'})
+    heureDepart = serializers.TimeField(required=False)
 
     def create(self, validated_data):
         return Prestation.objects.create(**validated_data)
