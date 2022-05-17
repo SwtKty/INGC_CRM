@@ -64,6 +64,7 @@ class PrestationSerializer(serializers.HyperlinkedModelSerializer):
     heureDepart = serializers.TimeField(required=False)
 
     def create(self, validated_data):
+        prenomEmploye = serializers.data.get('Employe').get('prenomEmploye')
         return Prestation.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
