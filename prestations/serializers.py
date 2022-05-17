@@ -50,21 +50,22 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class PrestationSerializer(serializers.HyperlinkedModelSerializer):
     create_by = serializers.ReadOnlyField(source='create_by.username')
+    prenomEmploye = employeSerializer3()
+    #prenomClient = clientSerializer4()
 
-    class Meta:
+    class Meta ():
         model = Prestation
-        fields = ['create_by', 'id', 'nomPrestation', 'heureArrivee', 'heureDepart', 'ref_employe', 'ref_client',
+        fields = ['prenomEmploye', 'create_by', 'id', 'nomPrestation', 'heureArrivee', 'heureDepart', 'ref_client',
                   'commentaire']
 
     id = serializers.IntegerField(read_only=True)
     nomPrestation = serializers.CharField(required=True, allow_blank=False, max_length=100)
-    ref_employe = employeSerializer3()
-    ref_client = clientSerializer4()
+    ref_employe = serializers.CharField(required=True, allow_blank=False, max_length=100)
+    ref_client = serializers.CharField(required=True, allow_blank=False, max_length=100)
     commentaire = serializers.CharField(style={'base_template': 'textarea.html'})
     heureDepart = serializers.TimeField(required=False)
 
     def create(self, validated_data):
-        prenomEmploye = employeSerializer3.data.get('Employe').get('prenomEmploye')
         return Prestation.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
