@@ -27,6 +27,6 @@ class employeSerializer1(serializers.ModelSerializer):
 class employeSerializer3(serializers.ModelSerializer):
     class Meta:
         model = Employe
-        fields = ['prenomEmploye', 'nomEmploye']
+        fields = ['prenomEmploye']
 
 

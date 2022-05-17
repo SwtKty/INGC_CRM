@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from clients.serializer import clientSerializer1, clientSerializer3
+from clients.serializer import clientSerializer1, clientSerializer3, clientSerializer4
 from employes.serializers import employeSerializer1, employeSerializer3
 from .models import Prestation
 from .models import Client, Employe, NewUser
@@ -17,7 +17,6 @@ class prestationSerializer1(serializers.ModelSerializer):
     class Meta:
         model = Prestation
         fields = '__all__'
-
 
 #class prestationSerializer3(serializers.ModelSerializer):
     employe = employeSerializer3(many=False, read_only=True)
@@ -59,8 +58,8 @@ class PrestationSerializer(serializers.HyperlinkedModelSerializer):
 
     id = serializers.IntegerField(read_only=True)
     nomPrestation = serializers.CharField(required=True, allow_blank=False, max_length=100)
-    ref_employe = serializers.CharField(required=True, allow_blank=False, max_length=100)
-    ref_client = serializers.CharField(required=True, allow_blank=False, max_length=100)
+    ref_employe = employeSerializer3()
+    ref_client = clientSerializer4()
     commentaire = serializers.CharField(style={'base_template': 'textarea.html'})
     heureDepart = serializers.TimeField(required=False)
 

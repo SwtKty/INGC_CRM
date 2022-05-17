@@ -19,3 +19,9 @@ class clientSerializer3(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = ['prenomClient', 'nomClient', 'rueClient', 'villeClient', 'cpClient']
+
+
+class clientSerializer4(serializers.ModelSerializer):
+    class Meta:
+        model = Client
+        fields = ['prenomClient']
