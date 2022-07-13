@@ -1,3 +1,5 @@
+import datetime
+
 from rest_framework import serializers
 
 from clients.serializer import clientSerializer1, clientSerializer3, clientSerializer4
@@ -50,20 +52,35 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class PrestationSerializer(serializers.HyperlinkedModelSerializer):
     create_by = serializers.ReadOnlyField(source='create_by.username')
-    prenomEmploye = Employe()
-    prenomClient = Client()
+    employe = serializers.StringRelatedField(many=True)
+    client = serializers.StringRelatedField(many=True)
 
     class Meta ():
         model = Prestation
         fields = ['create_by', 'id', 'nomPrestation', 'heureArrivee', 'heureDepart',
-                  'commentaire', 'prenomEmploye', 'prenomClient']
+                  'commentaire', 'employe', 'client']
 
     id = serializers.IntegerField(read_only=True)
     nomPrestation = serializers.CharField(required=True, allow_blank=False, max_length=100)
-    prenomEmploye = employeSerializer3()
-    prenomClient = clientSerializer4()
     commentaire = serializers.CharField(style={'base_template': 'textarea.html'})
     heureDepart = serializers.TimeField(required=False)
+
+    def create(self, validated_data):
+        return Prestation.objects.create(**validated_data)
+
+
+class PrestationSerializer2(serializers.HyperlinkedModelSerializer):
+    create_by = serializers.ReadOnlyField(source='create_by.username')
+
+    class Meta ():
+        model = Prestation
+        fields = ['create_by', 'id', 'nomPrestation',
+                  'commentaire']
+
+    id = serializers.IntegerField(read_only=True)
+    nomPrestation = serializers.CharField(required=True, allow_blank=False, max_length=100)
+    commentaire = serializers.CharField(style={'base_template': 'textarea.html'})
+
 
     def create(self, validated_data):
         return Prestation.objects.create(**validated_data)
