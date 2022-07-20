@@ -15,7 +15,7 @@ from rest_framework import generics
 from rest_framework import permissions
 
 from .permissions import IsOwnerOrReadOnly
-from .serializers import prestationSerializer1, PrestationSerializer, UserSerializer, PrestationSerializer2
+from .serializers import prestationSerializer1, PrestationSerializer, UserSerializer, PrestationSerializer2, prestationSerializer5
 
 from .models import Client, Employe, Prestation, NewUser
 from django.conf import settings
@@ -68,9 +68,11 @@ def prestationDetail(request, pk):
 
 @api_view(['POST'])
 def addPrestation(request):
-    serializer = PrestationSerializer(data=request.data)
+    serializer = prestationSerializer5(data=request.data)
+
     if serializer.is_valid():
         serializer.save()
+
     return Response(serializer.data)
 
 
@@ -114,7 +116,7 @@ class UserDetail(generics.RetrieveAPIView):
 
 class PrestationList(generics.ListCreateAPIView):
     queryset = Prestation.objects.all()
-    serializer_class = PrestationSerializer2
+    serializer_class = prestationSerializer5
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
@@ -123,7 +125,7 @@ class PrestationList(generics.ListCreateAPIView):
 
 class PrestationDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Prestation.objects.all()
-    serializer_class = PrestationSerializer2
+    serializer_class = prestationSerializer5
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 

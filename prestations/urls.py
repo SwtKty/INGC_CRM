@@ -9,6 +9,7 @@ urlpatterns = format_suffix_patterns([
     path('prestations/', views.prestation),
 
 
+#API REST fonction
     path('prestationAPI/', views.prestationOverview),
     path('prestationAPI-list/', views.prestationList),
     path('prestationAPI-detail/<str:pk>/', views.prestationDetail),
@@ -16,6 +17,7 @@ urlpatterns = format_suffix_patterns([
     path('updatePrestation/<str:pk>/', views.UpdatePrestation),
     path('deletePrestation/<str:pk>/', views.DeletePrestation),
 
+#API REST
     path('prestation/', views.PrestationList.as_view(), name='prestations-list'),
     path('prestation/<int:pk>', views.PrestationDetail.as_view(), name='prestations-detail'),
     path('users/', views.UserList.as_view(), name='users-list'),

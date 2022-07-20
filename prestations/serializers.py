@@ -20,7 +20,8 @@ class prestationSerializer1(serializers.ModelSerializer):
         model = Prestation
         fields = '__all__'
 
-#class prestationSerializer3(serializers.ModelSerializer):
+
+    # class prestationSerializer3(serializers.ModelSerializer):
     employe = employeSerializer3(many=False, read_only=True)
     client = clientSerializer3(many=False, read_only=True)
 
@@ -38,7 +39,7 @@ class prestationSerializer4(serializers.ModelSerializer):
         fields = ['employe', 'client']
 
 
-# nouvelle version commence ici
+# nouvelle version commence ici1
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -55,7 +56,7 @@ class PrestationSerializer(serializers.HyperlinkedModelSerializer):
     employe = serializers.StringRelatedField(many=True)
     client = serializers.StringRelatedField(many=True)
 
-    class Meta ():
+    class Meta():
         model = Prestation
         fields = ['create_by', 'id', 'nomPrestation', 'heureArrivee', 'heureDepart',
                   'commentaire', 'employe', 'client']
@@ -72,7 +73,7 @@ class PrestationSerializer(serializers.HyperlinkedModelSerializer):
 class PrestationSerializer2(serializers.HyperlinkedModelSerializer):
     create_by = serializers.ReadOnlyField(source='create_by.username')
 
-    class Meta ():
+    class Meta():
         model = Prestation
         fields = ['create_by', 'id', 'nomPrestation',
                   'commentaire']
@@ -81,6 +82,15 @@ class PrestationSerializer2(serializers.HyperlinkedModelSerializer):
     nomPrestation = serializers.CharField(required=True, allow_blank=False, max_length=100)
     commentaire = serializers.CharField(style={'base_template': 'textarea.html'})
 
-
     def create(self, validated_data):
         return Prestation.objects.create(**validated_data)
+
+
+# nouvelle version2 commence ici
+
+class prestationSerializer5(serializers.ModelSerializer):
+    create_by = serializers.ReadOnlyField(source='create_by.username')
+
+    class Meta():
+        model = Prestation
+        fields = '__all__'
