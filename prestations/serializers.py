@@ -94,3 +94,8 @@ class prestationSerializer5(serializers.ModelSerializer):
     class Meta():
         model = Prestation
         fields = '__all__'
+
+    id = serializers.IntegerField(read_only=True)
+    nomPrestation = serializers.CharField(required=True, allow_blank=False, max_length=100)
+    heureArrivee = serializers.TimeField(read_only=True)
+    commentaire = serializers.CharField(style={'base_template': 'textarea.html'})

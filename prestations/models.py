@@ -21,7 +21,7 @@ class Prestation(models.Model):
         ordering = ['created']
 
     def __str__(self):
-        return str(self.nomPrestation)
+        return self.nomPrestation
 
 
 

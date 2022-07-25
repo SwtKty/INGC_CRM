@@ -17,12 +17,6 @@ urlpatterns = format_suffix_patterns([
     path('updatePrestation/<str:pk>/', views.UpdatePrestation),
     path('deletePrestation/<str:pk>/', views.DeletePrestation),
 
-#API REST
-    path('prestation/', views.PrestationList.as_view(), name='prestations-list'),
-    path('prestation/<int:pk>', views.PrestationDetail.as_view(), name='prestations-detail'),
-    path('users/', views.UserList.as_view(), name='users-list'),
-    path('users/<int:pk>/', views.UserDetail.as_view(), name='users-detail'),
-    path('api/', views.api_root)
 
 ])
 
