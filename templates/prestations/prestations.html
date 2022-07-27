@@ -19,6 +19,7 @@
         <th>Heure Départ</th>
         <th>Employe</th>
         <th>Client</th>
+        <th>Commentaire</th>
     </tr>
 
      {% for prestation in prestations %}
@@ -27,8 +28,9 @@
         <th>{{ prestation.nomPrestation }}</th>
         <th>{{ prestation.heureArrivee }}</th>
         <th>{{ prestation.heureDepart }}</th>
-        <th>{{ prestation.employe }}</th>
-        <th>{{ prestation.client }}</th>
+        <th>{{ prestation.ref_employe }}</th>
+        <th>{{ prestation.ref_client }}</th>
+        <th>{{ prestation.commentaire }}</th>
     </tr>
     {% endfor %}
 

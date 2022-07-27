@@ -15,7 +15,7 @@ from rest_framework import generics
 from rest_framework import permissions
 
 from .permissions import IsOwnerOrReadOnly
-from .serializers import prestationSerializer1, PrestationSerializer, UserSerializer, PrestationSerializer2, prestationSerializer5
+from .serializers import prestationSerializer1, PrestationSerializer, UserSerializer, PrestationSerializer2, prestationSerializer5, prestationSerializerUpdate
 
 from .models import Client, Employe, Prestation, NewUser
 from django.conf import settings
@@ -50,3 +50,48 @@ def prestationOverview(request):
         'Delete': 'deletePrestation/<str:pk>/',
     }
     return Response(api_url)
+
+
+@api_view(['GET'])
+def prestationList(request):
+    prestations = Prestation.objects.all()
+    serializer = prestationSerializer1(prestations, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def prestationDetail(request, pk):
+    prestations = Prestation.objects.get(id=pk)
+    serializer = prestationSerializer1(prestations, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def addPrestation(request):
+    serializer = prestationSerializer5(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def UpdatePrestation(request, pk):
+    prestations = Prestation.objects.get(id=pk)
+    serializer = prestationSerializerUpdate(instance=prestations,data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+def DeletePrestation(request, pk):
+    prestations = Prestation.objects.get(id=pk)
+    prestations.delete()
+    return Response("Prestation succesfully delete!")
+
+# nouvelle version commence à partir de là
+

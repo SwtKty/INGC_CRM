@@ -20,8 +20,21 @@ class prestationSerializer1(serializers.ModelSerializer):
         model = Prestation
         fields = '__all__'
 
+    created = serializers.DateTimeField(read_only=True)
 
-    # class prestationSerializer3(serializers.ModelSerializer):
+
+class prestationSerializerUpdate(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = Prestation
+        fields = ['commentaire', 'heureDepart']
+
+    heureDepart = serializers.TimeField(default=datetime.timezone)
+
+# serailizers non essentiels
+
+class prestationSerializer3(serializers.ModelSerializer):
     employe = employeSerializer3(many=False, read_only=True)
     client = clientSerializer3(many=False, read_only=True)
 
