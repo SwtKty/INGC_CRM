@@ -28,11 +28,13 @@ class prestationSerializerUpdate(serializers.ModelSerializer):
 
     class Meta:
         model = Prestation
-        fields = ['commentaire', 'heureDepart']
+        fields = ['commentaire', 'heureDepart', 'created']
 
-    heureDepart = serializers.TimeField(default=datetime.timezone)
+    heureDepart = serializers.TimeField(default=datetime.datetime.now(), read_only=True)
+    created = serializers.DateTimeField(read_only=True)
 
 # serailizers non essentiels
+
 
 class prestationSerializer3(serializers.ModelSerializer):
     employe = employeSerializer3(many=False, read_only=True)
@@ -110,5 +112,5 @@ class prestationSerializer5(serializers.ModelSerializer):
 
     id = serializers.IntegerField(read_only=True)
     nomPrestation = serializers.CharField(required=True, allow_blank=False, max_length=100)
-    heureArrivee = serializers.TimeField(read_only=True)
+    heureArrivee = serializers.TimeField(default=datetime.datetime.now(), read_only=True)
     commentaire = serializers.CharField(style={'base_template': 'textarea.html'})

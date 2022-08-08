@@ -68,7 +68,7 @@ def prestationDetail(request, pk):
 
 @api_view(['POST'])
 def addPrestation(request):
-    serializer = prestationSerializer5(data=request.data)
+    serializer = prestationSerializer1(data=request.data)
 
     if serializer.is_valid():
         serializer.save()
