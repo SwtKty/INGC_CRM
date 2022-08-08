@@ -23,38 +23,13 @@ class prestationSerializer1(serializers.ModelSerializer):
     created = serializers.DateTimeField(read_only=True)
 
 
+
 class prestationSerializerUpdate(serializers.ModelSerializer):
-
-
     class Meta:
         model = Prestation
         fields = ['commentaire', 'heureDepart', 'created']
 
-    heureDepart = serializers.TimeField(default=datetime.datetime.now(), read_only=True)
     created = serializers.DateTimeField(read_only=True)
-
-# serailizers non essentiels
-
-
-class prestationSerializer3(serializers.ModelSerializer):
-    employe = employeSerializer3(many=False, read_only=True)
-    client = clientSerializer3(many=False, read_only=True)
-
-    class Meta:
-        model = Prestation
-        fields = ['nomPrestation', 'employe', 'client']
-
-
-class prestationSerializer4(serializers.ModelSerializer):
-    employe = employeSerializer3(many=False, read_only=True)
-    client = clientSerializer3(many=False, read_only=True)
-
-    class Meta:
-        model = Prestation
-        fields = ['employe', 'client']
-
-
-# nouvelle version commence ici1
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -66,43 +41,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['create_by', 'id', 'user_name', 'prestations']
 
 
-class PrestationSerializer(serializers.HyperlinkedModelSerializer):
-    create_by = serializers.ReadOnlyField(source='create_by.username')
-    employe = serializers.StringRelatedField(many=True)
-    client = serializers.StringRelatedField(many=True)
-
-    class Meta():
-        model = Prestation
-        fields = ['create_by', 'id', 'nomPrestation', 'heureArrivee', 'heureDepart',
-                  'commentaire', 'employe', 'client']
-
-    id = serializers.IntegerField(read_only=True)
-    nomPrestation = serializers.CharField(required=True, allow_blank=False, max_length=100)
-    commentaire = serializers.CharField(style={'base_template': 'textarea.html'})
-    heureDepart = serializers.TimeField(required=False)
-
-    def create(self, validated_data):
-        return Prestation.objects.create(**validated_data)
-
-
-class PrestationSerializer2(serializers.HyperlinkedModelSerializer):
-    create_by = serializers.ReadOnlyField(source='create_by.username')
-
-    class Meta():
-        model = Prestation
-        fields = ['create_by', 'id', 'nomPrestation',
-                  'commentaire']
-
-    id = serializers.IntegerField(read_only=True)
-    nomPrestation = serializers.CharField(required=True, allow_blank=False, max_length=100)
-    commentaire = serializers.CharField(style={'base_template': 'textarea.html'})
-
-    def create(self, validated_data):
-        return Prestation.objects.create(**validated_data)
-
-
-# nouvelle version2 commence ici
-
 class prestationSerializer5(serializers.ModelSerializer):
     create_by = serializers.ReadOnlyField(source='create_by.username')
 
@@ -112,5 +50,5 @@ class prestationSerializer5(serializers.ModelSerializer):
 
     id = serializers.IntegerField(read_only=True)
     nomPrestation = serializers.CharField(required=True, allow_blank=False, max_length=100)
-    heureArrivee = serializers.TimeField(default=datetime.datetime.now(), read_only=True)
+    heureArrivee = serializers.DateTimeField(read_only=True)
     commentaire = serializers.CharField(style={'base_template': 'textarea.html'})
