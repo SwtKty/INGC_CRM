@@ -23,7 +23,6 @@ class prestationSerializer1(serializers.ModelSerializer):
     created = serializers.DateTimeField(read_only=True)
 
 
-
 class prestationSerializerUpdate(serializers.ModelSerializer):
     class Meta:
         model = Prestation

@@ -10,13 +10,13 @@ from datetime import datetime
 class Prestation(models.Model):
 
     STATUT_CHOICES = [
-        ('EN COURS', 'EN COURS'),
-        ('FINI', 'FINI'),
-        ('VERIFIER', 'VERIFIER'),
+        ("EN_COURS", "EN_COURS"),
+        ("FINI", "FINI"),
+        ("VERIFIER", "VERIFIER"),
     ]
 
     nomPrestation = models.CharField(max_length=200)
-    heureArrivee = models.TimeField(default=datetime.now().timetz(), null=True)
+    heureArrivee = models.TimeField(auto_now_add=True, null=True)
     heureDepart = models.TimeField(default=datetime.now().timetz(), null=True)
     ref_employe = models.ForeignKey(Employe, related_name='employe', null=True, on_delete=models.SET_NULL)
     ref_client = models.ForeignKey(Client, related_name='client', null=True, on_delete=models.SET_NULL)
