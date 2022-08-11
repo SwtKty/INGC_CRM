@@ -26,9 +26,11 @@ class prestationSerializer1(serializers.ModelSerializer):
 class prestationSerializerUpdate(serializers.ModelSerializer):
     class Meta:
         model = Prestation
-        fields = ['commentaire', 'heureDepart', 'created']
+        fields = ['commentaire', 'heureDepart']
 
-    created = serializers.DateTimeField(read_only=True)
+    heureDepart = serializers.TimeField(read_only=True)
+
+
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
