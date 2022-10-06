@@ -1,5 +1,9 @@
 from rest_framework import serializers
 from .models import Client
+from prestations.models import Prestation
+from employes.models import Employe
+from employes.serializers import employeSerializer3
+
 
 
 class clientSerializer2(serializers.ModelSerializer):
@@ -25,3 +29,15 @@ class clientSerializer4(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = ['prenomClient']
+
+
+class clientJobsSerializer(serializers.ModelSerializer):
+
+    employe = employeSerializer3(many=False, read_only=True)
+    client = clientSerializer3(many=False, read_only=True)
+
+    class Meta:
+        model = Prestation
+        fields = '__all__'
+
+    created = serializers.DateTimeField(read_only=True)
