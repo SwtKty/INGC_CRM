@@ -2,8 +2,7 @@ from rest_framework import serializers
 from .models import Client
 from prestations.models import Prestation
 from employes.models import Employe
-from employes.serializers import employeSerializer3
-
+from employes.employeSerializers import employeSerializer3
 
 
 class clientSerializer2(serializers.ModelSerializer):

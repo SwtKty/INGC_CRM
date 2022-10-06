@@ -3,7 +3,7 @@ import datetime
 from rest_framework import serializers
 
 from clients.serializer import clientSerializer1, clientSerializer3, clientSerializer4
-from employes.serializers import employeSerializer1, employeSerializer3
+from employes.employeSerializers import employeSerializer1, employeSerializer3
 from .models import Prestation
 from .models import Client, Employe, NewUser
 from django.contrib.auth.models import User

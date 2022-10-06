@@ -2,13 +2,14 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
 from employes.models import Employe
+from prestations.models import Prestation
 
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
 from rest_framework import status
-from .serializers import employeSerializer2, employeSerializer1, EmployeLoginSerializer
+from .employeSerializers import employeSerializer2, employeSerializer1, EmployeLoginSerializer, employeJobsSerializer
 
 
 # Create your views here.
@@ -49,6 +50,17 @@ def employeDetail(request, pk):
     employes = Employe.objects.get(id=pk)
     serializer = employeSerializer1(employes, many=False)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def employeJobsList(request, pk):
+
+    employe = Employe.objects.get(id=pk)
+    prestations = Prestation.objects.filter(ref_employe=employe)
+    serializer = employeJobsSerializer(prestations, many=True)
+
+    return Response(serializer.data)
+
 
 
 @api_view(['POST'])
