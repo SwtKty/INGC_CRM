@@ -617,14 +617,14 @@
                         data: fd,
                         success: function(data) {
                             console.log(data, "i am the data after update job is completed");
-                            $('#updateformofjobdata').replaceWith($('#updateformofjobdata', data));
                             console.log("update is done");
                             $('#myUpdateModal').modal('hide');
                             $('#timeoutmsg').html("Updated Successfully");
 
                             setTimeout(() => {
                                 $('#timeoutmsg').html("");
-                            }, 2000)
+                                window.location.reload();
+                            }, 500)
 
                         },
                         error: function(xhr, exception) {
