@@ -22,10 +22,9 @@ class Prestation(models.Model):
     ref_client = models.ForeignKey(Client, related_name='client', null=True, on_delete=models.SET_NULL)
     created = models.DateTimeField(default=datetime.now, null=True)
     commentaire = models.TextField(max_length=1000, blank=True)
-    create_by = models.ForeignKey(NewUser, related_name='prestations', on_delete=models.CASCADE, null=True)
+    create_by = models.ForeignKey('auth.User', related_name='prestations', on_delete=models.CASCADE, null=True)
     statut = models.CharField(max_length=10, choices=STATUT_CHOICES, null=True)
     remarque_client = models.TextField(max_length=1000, blank=True)
-
 
     class Meta:
         ordering = ['created']

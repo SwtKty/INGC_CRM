@@ -6,10 +6,23 @@ from clients.serializer import clientSerializer1, clientSerializer3, clientSeria
 from employes.employeSerializers import employeSerializer1, employeSerializer3
 from .models import Prestation
 from .models import Client, Employe, NewUser
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta :
+        model = User
+        fields = ['url', 'username', 'email', 'groups']
+
+
+class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta :
+        model = Group
+        fields = ['url', 'name']
+
 
 
 class prestationSerializer1(serializers.ModelSerializer):
@@ -31,9 +44,7 @@ class prestationSerializerUpdate(serializers.ModelSerializer):
     heureDepart = serializers.TimeField(read_only=True)
 
 
-
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer2(serializers.HyperlinkedModelSerializer):
     prestations = serializers.HyperlinkedRelatedField(many=True, view_name='prestations-detail', read_only=True)
     create_by = serializers.ReadOnlyField(source='create_by.username')
 
